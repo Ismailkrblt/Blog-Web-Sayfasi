@@ -3,6 +3,7 @@
 body {
     font-family: Arial, sans-serif;
     font-size: 16px;
+    line-height: 1.5;
     color: #333;
     margin: 0;
     padding: 0;
@@ -18,7 +19,7 @@ body {
   }
   
   a {
-    color: black;
+    color: #0073b7;
     text-decoration: none;
   }
   
@@ -55,7 +56,7 @@ body {
   
   header nav a {
     color: #fff;
-    
+    text-decoration: none;
   }
   
   main {
@@ -119,7 +120,6 @@ body {
   #iletisim i {
     margin-right: 10px;
     font-size: 18px;
-    color: blue;
   }
   
   footer {
