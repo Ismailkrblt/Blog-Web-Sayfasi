@@ -128,4 +128,63 @@ body {
     padding: 10px;
     text-align: center;
   }
-  
+  .blog-giris {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.blog-giris h2 {
+    margin-top: 0;
+}
+
+.blog-giris form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.blog-giris form label {
+  width: 100px;
+  margin-bottom: 5px;
+}
+
+.blog-giris form input,
+.blog-giris form textarea {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.blog-giris form button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.bloglar {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.bloglar h2 {
+    margin-top: 0;
+}
+
+.blog-yazisi {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.blog-yazisi h3 {
+    margin-top: 0;
+}
+
+.blog-yazisi p {
+    margin-bottom: 10px;
+}
