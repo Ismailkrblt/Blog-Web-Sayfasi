@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BlogWeb</title>
+  <link rel="stylesheet" href="BlogYaz.css">
+</head>
+<body>
+  
+  <header>
+    <h1><a href="AnaSayfa.html" style="color: cyan; text-decoration: none;">BlogWeb</a></h1>
+    <nav>
+      <ul>
+        <li><a href="AnaSayfa.html">Ana Sayfa</a></li>
+        <li><a href="BlogYaz.html">Blog Yaz</a></li>
+        <li><a href="Hakkımızda.html">Hakkımızda</a></li>
+        <li><a href="Bloglar.html">Bloglar</a></li>
+        <li><a href="GirisYap.html">Giriş Yap</a></li>
+        <li><a href="KayıtOl.html">Kayıt Ol</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="blog-giris">
+  <h2>Yeni Blog Yazısı</h2>
+  <form action="kaydet.php" method="post">
+    <label for="yazar_ismi">Yazar İsmi:</label>
+    <input type="text" id="yazar_ismi" name="yazar_ismi" required>
+    <label for="baslik">Yazı Başlığı:</label>
+    <input type="text" id="baslik" name="baslik" required>
+    <label for="icerik">Blog:</label>
+    <textarea id="icerik" name="icerik" rows="10" required></textarea>
+    <button type="submit">Yayınla</button>
+  </form>
+</section>
+      
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

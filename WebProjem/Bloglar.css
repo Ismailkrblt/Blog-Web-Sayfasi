@@ -1,39 +1,16 @@
-/* Genel stiller */
-
 body {
     font-family: Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #333;
     margin: 0;
     padding: 0;
+    background-color: #f5f5f5;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  p {
-    margin-bottom: 15px;
-  }
-  
-  a {
-    color: #0073b7;
-    text-decoration: none;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Bölüm stilleri */
   
   header {
     background-color: #333;
     color: #fff;
     padding: 20px;
   }
+  
   header h1 {
     font-size: 2em;
     margin: 0;
@@ -63,64 +40,52 @@ body {
     padding: 20px;
   }
   
-  .container {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  
-  #hakkimda {
-    padding: 20px 0;
-  }
-  
-  #hakkimda img {
-    float: left;
-    margin-right: 20px;
-  }
-  
-  #beceriler {
-    padding: 20px 0;
-  }
-  
-  #beceriler ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  #beceriler ul li {
-    display: inline-block;
-    margin-right: 10px;
-    padding: 5px;
-    border: 1px solid red;
+  .hero {
+    background-color: #eee;
+    padding: 20px;
     border-radius: 5px;
-  }
-  
-  #projeler {
-    padding: 20px 0;
-  }
-  
-  #projeler ul li {
     margin-bottom: 20px;
   }
   
-  #projeler ul li a {
-    display: block;
+  h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .posts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .post {
+    width: 30%;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .post img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+  .post-content {
+    text-align: justify;
+  }
+  
+  .post h3 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+  }
+  
+  .post a {
     text-decoration: none;
+    color: #333;
   }
   
-  #projeler ul li img {
-    float: left;
-    margin-right: 20px;
-  }
-  
-  #iletisim {
-    padding: 20px 0;
-    background-color: #f7f7f7;
-  }
-  
-  #iletisim i {
-    margin-right: 10px;
-    font-size: 18px;
-  }
   
   footer {
     background-color: #333;
@@ -128,63 +93,26 @@ body {
     padding: 10px;
     text-align: center;
   }
-  .blog-giris {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 20px;
+  .post-container {
+    display: flex;
+    flex-wrap: wrap; /* Yeterli alan yoksa alt satıra geçsin */
+    gap: 50px; /* İstediğiniz aralığı ayarlayabilirsiniz */
 }
 
-.blog-giris h2 {
-    margin-top: 0;
-}
-
-.blog-giris form {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.blog-giris form label {
-  width: 100px;
-  margin-bottom: 5px;
-}
-
-.blog-giris form input,
-.blog-giris form textarea {
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
-}
-
-.blog-giris form button {
-  margin-top: 10px;
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.bloglar {
-    border: 1px solid #ddd;
-    padding: 10px;
-}
-
-.bloglar h2 {
-    margin-top: 0;
-}
-
-.blog-yazisi {
-    border-bottom: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.blog-yazisi h3 {
-    margin-top: 0;
-}
-
-.blog-yazisi p {
-    margin-bottom: 10px;
+.post {
+    flex: 1; /* Eşit genişlikte olmalarını sağlar */
+    padding: 30px;
+    border: 5px solid #ddd;
+    border-radius: 15px;
+    background-color: #f9f9f9;
+  h3{
+    margin-right: auto;
+  }
+ section{
+  float: left;
+  padding:30px;
+  border: 10px solid gray;
+  border-radius: 30px;
+  background-color: aliceblue;
+ }
 }

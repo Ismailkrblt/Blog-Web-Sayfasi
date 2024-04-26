@@ -128,78 +128,63 @@ body {
     padding: 10px;
     text-align: center;
   }
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
-.container {
-    width: 400px;
-    margin: 50px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-header {
-    text-align: center;
+  .blog-giris {
+    border: 1px solid #ddd;
+    padding: 10px;
     margin-bottom: 20px;
 }
 
-img {
-    width: 100px;
-    height: auto;
+.blog-giris h2 {
+    margin-top: 0;
 }
 
-h1 {
-    font-size: 24px;
-    margin-top: 10px;
+.blog-giris form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
 }
 
-main {
+.blog-giris form label {
+  width: 100px;
+  margin-bottom: 5px;
+}
+
+.blog-giris form input,
+.blog-giris form textarea {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.blog-giris form button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.bloglar {
+    border: 1px solid #ddd;
     padding: 10px;
 }
 
-label {
-    display: block;
-    margin-bottom: 5px;
+.bloglar h2 {
+    margin-top: 0;
 }
 
-input[type="text"],
-input[type="password"] {
-    width: 100%;
+.blog-yazisi {
+    border-bottom: 1px solid #ddd;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
-input[type="checkbox"] {
-    margin-right: 5px;
+.blog-yazisi h3 {
+    margin-top: 0;
 }
 
-button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-footer {
-    text-align: center;
-    margin-top: 20px;
+.blog-yazisi p {
+    margin-bottom: 10px;
 }
