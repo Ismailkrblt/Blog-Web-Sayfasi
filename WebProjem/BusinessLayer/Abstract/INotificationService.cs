@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Abstract
 {
-    public interface INotificationService:IGenericService<Notification>
+   public interface INotificationService : IGenericService<Notification>
     {
+        List<Notification> TGetAll3Last();
     }
 }

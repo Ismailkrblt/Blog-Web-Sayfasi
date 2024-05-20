@@ -1,6 +1,6 @@
 ﻿using ClosedXML.Excel;
 using CoreDemo.Areas.Admin.Models;
-using DataAccessLayer.Concrete.Context;
+using DataAccessLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,61 +12,57 @@ using System.Threading.Tasks;
 namespace CoreDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin,Moderator")]
+    [Authorize(Roles = "Admin")]
+
     public class BlogController : Controller
     {
-        
         public IActionResult ExportStaticExcelBlogList()
         {
+
             using (var workbook = new XLWorkbook())
             {
                 var worksheet = workbook.Worksheets.Add("Blog Listesi");
-                worksheet.Cell(1, 1).Value = "Blog ID";
+                worksheet.Cell(1, 1).Value = "BlogID"; 
                 worksheet.Cell(1, 2).Value = "Blog Adı";
 
+
                 int BlogRowCount = 2;
+
                 foreach (var item in GetBlogList())
                 {
-                    worksheet.Cell(BlogRowCount, 1).Value = item.BlogId;
+                    worksheet.Cell(BlogRowCount, 1).Value = item.ID;
                     worksheet.Cell(BlogRowCount, 2).Value = item.BlogName;
                     BlogRowCount++;
                 }
 
-                using(var stream=new MemoryStream())
+                using(var stream = new MemoryStream())
                 {
                     workbook.SaveAs(stream);
-                    var content = stream.ToArray();
-                    return File(content,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","Calisma1.xlsx");
+                    var context = stream.ToArray();
+                    return File(context, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Dosya.xlsx");
                 }
+
             }
+            
+
               
         }
-        public List<BlogModel> GetBlogList()
+
+        public IActionResult ExportDinamikExcelBlogList()
         {
-            List<BlogModel> bm = new List<BlogModel>
-            {
-                new BlogModel{BlogId=1,BlogName="C# PROGRAMLAMAYA GİRİŞ"},
-                new BlogModel{BlogId=2,BlogName="Tesla firması nasıl kuruldu?"},
-                new BlogModel{BlogId=3,BlogName="Türkiye voleybolda kaçıncı sırada?"}
-            };
-            return bm;
-        }
-        public IActionResult BlogListExcel()
-        {
-            return View();
-        }
-        public IActionResult ExportDynamicExcelBlogList()
-        {
+
             using (var workbook = new XLWorkbook())
             {
                 var worksheet = workbook.Worksheets.Add("Blog Listesi");
-                worksheet.Cell(1, 1).Value = "Blog ID";
+                worksheet.Cell(1, 1).Value = "BlogID";
                 worksheet.Cell(1, 2).Value = "Blog Adı";
 
+
                 int BlogRowCount = 2;
-                foreach (var item in BlogTitleList())
+
+                foreach (var item in GetDinamikBlogList())
                 {
-                    worksheet.Cell(BlogRowCount, 1).Value = item.BlogID;
+                    worksheet.Cell(BlogRowCount, 1).Value = item.ID;
                     worksheet.Cell(BlogRowCount, 2).Value = item.BlogName;
                     BlogRowCount++;
                 }
@@ -74,26 +70,50 @@ namespace CoreDemo.Areas.Admin.Controllers
                 using (var stream = new MemoryStream())
                 {
                     workbook.SaveAs(stream);
-                    var content = stream.ToArray();
-                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Calisma1.xlsx");
+                    var context = stream.ToArray();
+                    return File(context, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Dosya.xlsx");
                 }
+
             }
+
+
+
         }
-        public List<BlogModel2> BlogTitleList()
+
+        public IActionResult BlogListExcel()
         {
-            List<BlogModel2> bm = new List<BlogModel2>();
-            using(var c=new Context())
+            return View();
+        }
+        public List<BlogModel> GetBlogList()
+        {
+
+            var bm = new List<BlogModel>
             {
-                bm = c.Blogs.Select(x => new BlogModel2
+                new BlogModel{ID = 1 , BlogName= "Samet Akca"},
+                new BlogModel{ID = 2 , BlogName= "Eslem Betül"},
+                new BlogModel{ID = 3 , BlogName= "test"}
+            };
+            return bm;
+
+        }
+
+        public List<BlogModel> GetDinamikBlogList()
+        {
+            var bm = new List<BlogModel>();
+
+            using (var c = new Context())
+            {
+                bm = c.Blogs.Select(x => new BlogModel
                 {
-                    BlogID = x.BlogId,
-                    BlogName = x.BlogTitle
+                    ID = x.BlogId,
+                    BlogName = x.Title
                 }).ToList();
-                    
             }
+
             return bm;
         }
-        public IActionResult BlogTitleListExcel()
+
+        public IActionResult DinamikBlogList()
         {
             return View();
         }

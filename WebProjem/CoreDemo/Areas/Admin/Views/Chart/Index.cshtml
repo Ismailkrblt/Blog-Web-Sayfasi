@@ -1,38 +1,38 @@
 ﻿
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
+
 <div class="row">
+
     <div class="col-lg-12">
         <div id="chartdiv" style="width:800px; height:600px">
-            <h2>Burası Chart Alanıdır</h2>
+            <h3> Chart Alanı </h3>
         </div>
     </div>
 </div>
+
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-    google.charts.load('current', { 'packages': ['CoreChart'] });
-    google.charts.setOnLoadCallback(DrawonLoad);//çağırıldığı zaman çizme işlemi gerçekleşecek
-
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(DrawonLoad);
     function DrawonLoad() {
         $(function () {
             $.ajax({
                 type: 'GET',
-                url: '/Admin/Chart/CategoryChart/',//bunu çağıracaksın
-                success: function (chartsdata) {//çağırma işlemi başarılı olursa bir tane daha fonksiyon devreye girsin
-                    var Data = chartsdata.jsonlist;//objeden jsonlisti çekiyoruz jsonlisti CategoryChart tan çağırdık
-                    var data = new google.visualization.DataTable();//dataya görselleştirmek için gerekli olan atamayı yaptık
-                    data.addColumn('string', 'categoryname');//grafiğe sütun ekliyoruz; bu sütunden iki tane olacak birincisi string türü için grafiğe çekeceğimiz alanın string kısmını ikinci yere veriyoruz
+                url: '/Admin/Chart/CategoryChart/',
+                success: function (chartsdata) {
+                    var Data = chartsdata.jsonlist;
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'categoryname');
                     data.addColumn('number', 'categorycount');
-                    for (var i = 0; i < Data.length; i++) {//her bir datayı grafiğe yansıtmak için döngüye alıyoruz
-                        data.addRow([Data[i].categoryname, Data[i].categorycount]);//satırların içine datadan gelen i. değerin categoryname ini ve category countunu ekle
+                    for (var i = 0; i < Data.length; i++) {
+                        data.addRow([Data[i].categoryname, Data[i].categorycount]);
                     }
-                    //CHARTIN TÜRÜ BELİRLENİYOR PİECHART TÜRÜ.PARANTEZ İÇİNDE PARAMETRE GÖNDERİYORUZ SAYFANIN HANGİ KISMINA YAZMAMIZ GEREKİYOR DİVİN ARASINDA divin içindeki id yi yazdırıyoruz
                     var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
-                    //chartın ekrana basılması
                     chart.draw(data, {
-                        title: "Yazılan Blog Sayılarına Göre Kategori Listesi",
+                        title: "Google Chart Core Projesi",
                         position: "top",
                         fontsize: "16px"
                     });
@@ -41,6 +41,10 @@
         })
     }
 </script>
-@section scripts{
 
+@section scripts
+{
+    <scripts>
+
+    </scripts>
 }

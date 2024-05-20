@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 
 namespace CoreDemo.ViewComponents.Category
 {
-    public class CategoryList:ViewComponent
+    public class CategoryList : ViewComponent
     {
-        CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
+        CategoryManager cm = new CategoryManager(new EfCategoryRepository());
         public IViewComponentResult Invoke()
         {
-            //ViewBag.vlc=categoryManager.GetById()
-            var values = categoryManager.GetList();
+            var values = cm.GetAllStatusActive();
             return View(values);
         }
     }

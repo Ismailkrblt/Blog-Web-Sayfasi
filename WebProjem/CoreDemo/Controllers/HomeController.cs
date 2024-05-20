@@ -1,4 +1,8 @@
-﻿using CoreDemo.Models;
+﻿using BusinessLayer.Concrete;
+using CoreDemo.Models;
+using DataAccessLayer.Concrete;
+using DataAccessLayer.EntityFramework;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,15 +16,19 @@ namespace CoreDemo.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
+        BlogManager bm = new BlogManager(new EfBlogRepository());
+        Context c = new Context();
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
-            return View();
+
+            var result = bm.TGetAll().Where(x => x.Status == true ).ToList().TakeLast(3);
+            return View(result);
         }
 
         public IActionResult Privacy()
@@ -33,9 +41,11 @@ namespace CoreDemo.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
         public IActionResult Test()
         {
             return View();
         }
+
     }
 }

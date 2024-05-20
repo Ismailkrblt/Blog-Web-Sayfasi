@@ -10,32 +10,38 @@ using System.Threading.Tasks;
 
 namespace CoreDemo.Controllers
 {
+    [Authorize(Roles = "Admin,Moderator,Writer")]
+
     [AllowAnonymous]
     public class CommentController : Controller
     {
-        CommentManager commentManager = new CommentManager(new EfCommentDal());
+       CommentManager cm = new CommentManager(new EfCommentRepository());
+
         public IActionResult Index()
         {
             return View();
         }
+
         [HttpGet]
-        public IActionResult PartialAddComment()
+        public PartialViewResult PartialAddComment()
         {
             return PartialView();
         }
+        
         [HttpPost]
         public IActionResult PartialAddComment(Comment comment)
         {
-            comment.CommentDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-            comment.CommentStatus = true;
-            comment.BlogId = 7;
-            commentManager.TAdd(comment);
-            return RedirectToAction("Index", "Blog");
+            comment.Date = DateTime.Parse(DateTime.Now.ToShortDateString());
+            comment.Status = true;
+            cm.TAdd(comment);
+            return RedirectToAction("BlogReadAll", "Blog", new { id = comment.BlogId});
         }
+
         public PartialViewResult CommentListByBlog(int id)
         {
-            var values=commentManager.GetList(id);
-            return PartialView(values);
+            var result = cm.GetAll(id);
+            return PartialView(result);
         }
+
     }
 }

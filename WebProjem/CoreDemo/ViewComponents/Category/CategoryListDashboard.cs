@@ -1,5 +1,4 @@
 ﻿using BusinessLayer.Concrete;
-using DataAccessLayer.Concrete.Context;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,13 +8,12 @@ using System.Threading.Tasks;
 
 namespace CoreDemo.ViewComponents.Category
 {
-    public class CategoryListDashboard:ViewComponent
+    public class CategoryListDashboard : ViewComponent
     {
-        CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
+        CategoryManager cm = new CategoryManager(new EfCategoryRepository());
         public IViewComponentResult Invoke()
         {
-            
-            var values = categoryManager.GetList();
+            var values = cm.TGetAll();
             return View(values);
         }
     }

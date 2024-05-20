@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete
 {
-    public class BlogRayting
+   public class BlogRayting
     {
-        public int ID { get; set; }
-        public int BlogID { get; set; }
-        public Blog Blog { get; set; }
+        public int BlogRaytingId { get; set; }
+        public int BlogId { get; set; }
         public int BlogTotalScore { get; set; }
         public int BlogRaytingCount { get; set; }
+
     }
 }

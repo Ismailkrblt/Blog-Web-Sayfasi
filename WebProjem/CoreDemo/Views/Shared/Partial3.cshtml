@@ -2,65 +2,72 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 footer-grid-agileits-w3ls text-left">
-                <h3>Hakkımızda</h3>
-                <p>Blogların içeriği geleneksel internet içeriğinden farklılık gösterdiği için sadece bloglar için kurulmuş özel indeksleme mekanizmaları ve arama motorları bulunmaktadır. Technorati en başarılı blog teknolojilerinden biridir. Ayrıca Google Blog Search adında bir blog arama motoru işletmektedir.</p>
+                <h2> Hakkımızda </h2>
+                <h6 class="text-white-50">Her hikayenin bir başlangıcı vardır. İşletmenizin ne zaman, nerede ve nasıl hayata geçtiğini öğrenmek müşterilerinizin hoşuna gidecektir. Bürokratik süreciniz veya iş fikrinizin bugünlere gelişini anlatarak okuyucularınıza farklı ufuklar açabilirsiniz. Eğer..</h6>
                 <div class="read">
-                    <a href="/About/Index/" class="btn btn-primary read-m">Devamını Oku</a>
+                    <a href="/About/Index/" class="btn btn-primary read-m">Devamını  Oku...</a>
                 </div>
             </div>
             <div class="col-lg-4 footer-grid-agileits-w3ls text-left">
-                @await Component.InvokeAsync("BlogLast3Post");
+
+                @await Component.InvokeAsync("BlogLast3Post")
             </div>
-        <!-- subscribe -->
-        <div class="col-lg-4 subscribe-main footer-grid-agileits-w3ls text-left">
-            <h2>Mail Bültenine Abone Olun</h2>
-            @await Html.PartialAsync("~/Views/NewsLetter/SubcribeMail.cshtml")
-        </div>
-        <!-- //subscribe -->
-    </div>
-    </div>
-    <!-- footer -->
-    <div class="footer-cpy text-center">
-        <div class="footer-social">
-            <div class="copyrighttop">
-                <ul>
-                    <li class="mx-3">
-                        <a class="facebook" href="#">
-                            <i class="fab fa-facebook-f"></i>
-                            <span>Facebook</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="facebook" href="#">
-                            <i class="fab fa-twitter"></i>
-                            <span>Twitter</span>
-                        </a>
-                    </li>
-                    <li class="mx-3">
-                        <a class="facebook" href="#">
-                            <i class="fab fa-google-plus-g"></i>
-                            <span>Google+</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="facebook" href="#">
-                            <i class="fab fa-pinterest-p"></i>
-                            <span>Pinterest</span>
-                        </a>
-                    </li>
-                </ul>
+            <!-- subscribe -->
+            <div class="tech-btm">
+                <h4 class="text-light" > Haber bültenimize kaydolun </h4>
+
+                <h6 class="text-success" > <b> Yazılım, Teknoloji, Sanat ve diğer bloglar... </b>   </h6>
+                <form action="/NewsLetter/SubscribeMail/" method="post">
+                    <input type="email" placeholder="Email" required="" name="Mail">
+                    <input type="submit" value="Abone Ol">
+                </form>
 
             </div>
         </div>
-        <div class="w3layouts-agile-copyrightbottom">
-            <p>
-                © @DateTime.Now.Year Aps.Net Core 5.0 Proje Kampı | Tüm Hakları Saklıdır | Design By
-                <a href="http://w3layouts.com/">Rabia Nur Kavi</a>
-            </p>
+        <!-- footer -->
+        <div class="footer-cpy text-center">
+            <div class="footer-social">
+                <div class="copyrighttop">
+                    <ul>
+                        <li class="mx-3">
+                            <a class="" href="https://www.instagram.com/smtcoder/">
+                                <i class="fab fa-instagram"></i>
+                                <span>instagram</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="btn-github" href="https://github.com/smtdeveloper">
+                                <i class="fab fa-github"></i>
+                                <span>Github</span>
+                            </a>
+                        </li>
+                        <li class="mx-3">
+                            <a class="instagram" href="https://www.linkedin.com/in/samet-akca-2a4bbb1a8/">
+                                <i class="fab fa-linkedin"></i>
+                                <span>linkedin</span>
+                            </a>
+                        </li>
+                        <li class="mx-3">
+                            <a class="instagram" href="https://www.youtube.com/channel/UCZXmqpZJ3ax5Uzm0pXeVqMg/featured">
+                                <i class="fab fa-youtube"></i>
+                                <span>youtube</span>
+                            </a>
+                        </li>
+                    </ul>
 
+                </div>
+            </div>
+            <div class="w3layouts-agile-copyrightbottom">
+                <h6 class="text-white-50">
+                    © @DateTime.Now.Year  Samet Akca  | Asp.Net Core 5.0 Projesi -
+                    <a class="text-success" href="https://www.instagram.com/smtcoder/">  SMTcoder</a>
+                </h6>
+
+            </div>
         </div>
-    </div>
 
-    <!-- //footer -->
+        <!-- //footer -->
+
+
     </div>
 </footer>

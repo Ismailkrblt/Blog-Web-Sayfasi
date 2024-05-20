@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Abstract
 {
-    public interface INotificationDal:IGenericDal<Notification>
+   public interface INotificationDal : IGenericDal<Notification>
     {
+
     }
 }

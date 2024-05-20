@@ -9,49 +9,44 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Concrete
 {
-    public class CategoryManager: ICategoryService
+    public class CategoryManager : ICategoryService
     {
-        
         ICategoryDal _categoryDal;
+
         public CategoryManager(ICategoryDal categoryDal)
         {
             _categoryDal = categoryDal;
         }
-        public List<Category> GetList()
+
+
+        public List<Category> TGetAll()
         {
-            return _categoryDal.List();
+            return _categoryDal.GetAll().ToList();
         }
 
-        public Category GetById(int id)
+        public Category TGetById(int id)
         {
-            return _categoryDal.Get(x => x.CategoryId == id);
+            return _categoryDal.GetById(id);
         }
 
-        public void TAdd(Category t)
+        public void TAdd(Category entity)
         {
-            _categoryDal.Insert(t);
+             _categoryDal.Add(entity);
         }
 
-        public void TDelete(Category t)
+        public void TDelete(Category entity)
         {
-            _categoryDal.Delete(t);
+            _categoryDal.Delete(entity);
         }
 
-        public void TUpdate(Category t)
+        public void TUpdate(Category entity)
         {
-            _categoryDal.Update(t);
+            _categoryDal.Update(entity);
         }
 
-        public bool UpdateRecordState(int id, bool state)
+        public ICollection<Category> GetAllStatusActive()
         {
-            var recordExities = _categoryDal.GetById(id);
-            if (recordExities != null)
-            {
-                recordExities.CategoryStatus = state;
-                _categoryDal.Update(recordExities);
-            }
-
-            return false;
+          return  _categoryDal.GetAllStatusActive();
         }
     }
 }

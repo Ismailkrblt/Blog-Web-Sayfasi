@@ -11,34 +11,15 @@ namespace BusinessLayer.Concrete
 {
     public class NewsLetterManager : INewsLetterService
     {
-        INewsLetterDal _newsLetterDal;
-        public NewsLetterManager(INewsLetterDal newsLetterDal)
+        INewsLetterDal _newsLetter;
+        public NewsLetterManager(INewsLetterDal newsLetter)
         {
-            _newsLetterDal = newsLetterDal;
-        }
-        public NewsLetter GetById(int id)
-        {
-            return _newsLetterDal.Get(x => x.MailId == id);
+            _newsLetter = newsLetter;
         }
 
-        public List<NewsLetter> GetList()
+        public void AddNewsLetter(NewsLetter newsLetter)
         {
-            return _newsLetterDal.List();
-        }
-
-        public void TAdd(NewsLetter t)
-        {
-            _newsLetterDal.Insert(t);
-        }
-
-        public void TDelete(NewsLetter t)
-        {
-            _newsLetterDal.Delete(t);
-        }
-
-        public void TUpdate(NewsLetter t)
-        {
-            _newsLetterDal.Update(t);
+            _newsLetter.Add(newsLetter);
         }
     }
 }

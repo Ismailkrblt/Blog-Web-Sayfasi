@@ -1,5 +1,7 @@
-﻿using CoreDemo.Models;
-using DataAccessLayer.Concrete.Context;
+﻿using BusinessLayer.Concrete;
+using CoreDemo.Models;
+using DataAccessLayer.Concrete;
+using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace CoreDemo.Controllers
 {
+
     [AllowAnonymous]
     public class LoginController : Controller
     {
@@ -23,68 +26,60 @@ namespace CoreDemo.Controllers
         {
             _signInManager = signInManager;
         }
+        
+        [HttpGet]
+        public IActionResult Index()
+        {
+
+            return View(new UserSignInModel());
+        }
+
+        public IActionResult Index2()
+        {
+            return View();
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Index(UserSignInViewModel user)
+        public async Task<IActionResult> Index(UserSignInModel model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(user.username, user.password, false, true);//sondaki parametre belli bir süre yanlış giriş sonucu banlanmak
+                var result = await _signInManager.PasswordSignInAsync(model.username, model.password, false, true);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Blog");
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Login");
+                    TempData["ErrorMessage"] = "Kullanıcı adınız veya parolanız hatalı lütfen tekrar deneyiniz.";
+                    return View(model);
                 }
             }
-            return View();
+            return View(model);
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index","Login");
+            return RedirectToAction("Index", "Login");
         }
-        public IActionResult AccessDenied()
+
+        public IActionResult AccesDenied()
         {
             return View();
         }
-        //[HttpPost]
-        //public async Task<ActionResult> Index(Writer writer)
-        //{
-        //    Context context = new Context();
-        //    var dataValue = context.Writers.FirstOrDefault(x => x.WriterMail == writer.WriterMail && x.WriterPassword == writer.WriterPassword);
-        //    if(dataValue!=null)
-        //    {
-        //        var claims = new List<Claim>
-        //        {
-        //            new Claim(ClaimTypes.Name,writer.WriterMail)
-        //        };
-        //        var useridentity = new ClaimsIdentity(claims, "a");
-        //        ClaimsPrincipal principal = new ClaimsPrincipal(useridentity);
-        //        await HttpContext.SignInAsync(principal);
-        //        return RedirectToAction("Index", "Dashboard");
-        //    }
-        //    else
-        //    {
-        //        return View();
-        //    }
-        //    //Context context = new Context();
-        //    //var dataValue = context.Writers.FirstOrDefault(x=>x.WriterMail==writer.WriterMail && x.WriterPassword== writer.WriterPassword);
-        //    //if (dataValue != null)
-        //    //{
-        //    //    HttpContext.Session.SetString("username", writer.WriterMail);
-        //    //    return RedirectToAction("Index", "Writer");
-        //    //}
-        //    //else
-        //    //{
-        //    //    return View();
-        //    //}
-        //}
+
     }
 }
+
+//Context c = new Context();
+//var datavalue = c.Writers.FirstOrDefault(x => x.Mail == writer.Mail && x.Password == writer.Password);
+//if (datavalue != null)
+//{
+//    HttpContext.Session.SetString("username", writer.Mail);
+//    return RedirectToAction("Index", "Writer");
+//}
+//else
+//{
+//    return View();
+//}

@@ -11,13 +11,18 @@ namespace EntityLayer.Concrete
     {
         [Key]
         public int WriterId { get; set; }
-        public string WriterName { get; set; }
-        public string WriterAbout { get; set; }
-        public string WriterImage { get; set; }
-        public string WriterMail { get; set; }
-        public string WriterPassword { get; set; }
-        public bool WriterStatus { get; set; }
+        public string Name { get; set; }
+        public string About { get; set; }
+        public string  City { get; set; }
+        public string Gender { get; set; }
+        public string Phone { get; set; }
+        public string Image { get; set; }
+        public string Mail { get; set; }
+        public string Password { get; set; }
+        public bool Status { get; set; }
+
         public List<Blog> Blogs { get; set; }
+
         public virtual ICollection<Message2> WriterSender { get; set; }
         public virtual ICollection<Message2> WriterReceiver { get; set; }
     }

@@ -1,100 +1,99 @@
 ﻿using BusinessLayer.Concrete;
-using DataAccessLayer.Concrete.Context;
+using CoreDemo.Areas.Admin.Models;
+using CoreDemo.Models;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace CoreDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin,Moderator")]
+    [Authorize(Roles = "Admin")]
+
     public class AdminMessageController : Controller
     {
-        Message2Manager message2Manager = new Message2Manager(new EfMessage2Dal());
-        Context context = new Context();
-        public IActionResult InBox()
+        Message2Manager mm = new Message2Manager(new EfMessage2Repository());
+        Context c = new Context();
+        private readonly Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager;
+        public AdminMessageController(Microsoft.AspNetCore.Identity.UserManager<AppUser> userManager)
         {
-            var userName = User.Identity.Name;
-            var userMail = context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
-            var writerId = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
-            var values = message2Manager.GetInboxListByWriter(writerId);
-            var valuesSend = message2Manager.GetSendBoxListByWriter(writerId).Count();
-            var messageTotal = message2Manager.GetInboxListByWriter(writerId).Count();
-            ViewBag.messageTotal = messageTotal;
-            ViewBag.messageSendTotal = valuesSend;
+            _userManager = userManager;
+        }
+        public IActionResult Inbox()
+        {
+            var username = User.Identity.Name;
+            var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
+            var writerID = c.Writers.Where(x => x.Mail == usermail).Select(y => y.WriterId).FirstOrDefault();
+            var values = mm.GetInboxListByWriter(writerID);
+            //ViewBag.InboxCount = c.Messages2.Where(x => x.ReceiverID == writerID).Select(y => y.MessageStatus == false).Count();
+
 
             return View(values);
         }
-        public IActionResult SendBox()
+
+        public IActionResult Sendbox()
         {
-            var userName = User.Identity.Name;
-            var userMail = context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
-            var writerId = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
-            var values = message2Manager.GetSendBoxListByWriter(writerId);
-            var messageTotal= message2Manager.GetSendBoxListByWriter(writerId).Count();
-            var messageInboxTotal = message2Manager.GetInboxListByWriter(writerId).Count();
-            ViewBag.messageSendTotal = messageTotal;
-            ViewBag.messageInboxTotal = messageInboxTotal;
+            var username = User.Identity.Name;
+            var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
+            var writerID = c.Writers.Where(x => x.Mail == usermail).Select(y => y.WriterId).FirstOrDefault();
+            var values = mm.GetSendboxListByWriter(writerID);
+
             return View(values);
         }
+
         [HttpGet]
         public IActionResult ComposeMessage()
         {
-            var userName = User.Identity.Name;
-            var userMail = context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
-            var writerId = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
-            var messageTotal = message2Manager.GetSendBoxListByWriter(writerId).Count();
-            var messageInboxTotal = message2Manager.GetInboxListByWriter(writerId).Count();
-
-            ViewBag.messageSendTotal = messageTotal;
-            ViewBag.messageInboxTotal = messageInboxTotal;
+            
             return View();
         }
+
         [HttpPost]
-        public IActionResult ComposeMessage(Message2 message2)
+        public IActionResult ComposeMessage(SendMessageModelView model)
         {
-            var userName = User.Identity.Name;
-            var userMail = context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
-            var writerId = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
-            message2.SenderID = writerId;
-            message2.ReceiverID = 2;
-            message2.MessageDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());
-            message2.MessageStatus = true;
-            message2Manager.TAdd(message2);
-            return RedirectToAction("SendBox");
+            Message2 message = new Message2();
+            var reciever =  _userManager.FindByEmailAsync(model.Email);
+
+            var username = User.Identity.Name;
+            var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
+            var writerID = c.Writers.Where(x => x.Mail == usermail).Select(y => y.WriterId).FirstOrDefault();
+            message.SenderID = writerID;
+            message.ReceiverID = reciever.Id;
+            message.MessageDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+            message.MessageStatus = false;
+            message.Subject = model.Subject;
+            message.MessageDetails = model.Detail;
+            message.IsDelete = false;
+            mm.TAdd(message);
+
+
+
+            return RedirectToAction("Sendbox", "AdminMessage");
         }
-        public IActionResult MessageDetail(int id)
+
+        public async Task<IActionResult> MessageDetail(int id)
         {
-            var query = from message in context.Message2s
-                        join writer in context.Writers
-                        on message.SenderID equals writer.WriterId
-                        where message.MessageID == id
-                        select new { writer.WriterMail };
-            var queryData = query.SingleOrDefault();
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var inboxMessageCount = mm.GetInboxListByWriter(user.Id).Count();
+            var sendMessageCount = mm.GetSendboxListByWriter(user.Id).Count();
+            ViewBag.imc = inboxMessageCount;
+            ViewBag.smc = sendMessageCount;
 
+            var value = mm.TGetById(id);
+            if (value.MessageStatus == false)
+            {
+                value.MessageStatus = true;
+                mm.TUpdate(value);
+            }
 
-
-            var userName = User.Identity.Name;
-            var userMail = context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
-            var writerId = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
-            var messageTotal = message2Manager.GetSendBoxListByWriter(writerId).Count();
-            var messageInboxTotal = message2Manager.GetInboxListByWriter(writerId).Count();
-           
-            ViewBag.messageSendTotal = messageTotal;
-            ViewBag.messageInboxTotal = messageInboxTotal;
-
-            
-            var messageId = message2Manager.GetById(id);
-            //int receiverId = messageIdd.ReceiverID;
-            //hatalı
-            //var messageId = message2Manager.GetInboxListByWriter(id);
-            ViewBag.vtc = queryData.WriterMail;
-            return View(messageId);
+            return View(value);
         }
+
+
     }
 }

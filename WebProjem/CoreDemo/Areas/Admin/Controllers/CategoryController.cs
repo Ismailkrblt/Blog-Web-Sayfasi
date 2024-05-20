@@ -1,6 +1,7 @@
-﻿using BusinessLayer.Concrete;
-using BusinessLayer.ValidationRules;
-using DataAccessLayer.Concrete.Context;
+﻿
+using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules.FluentValidation;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -15,34 +16,35 @@ using X.PagedList;
 namespace CoreDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin,Moderator")]
+    [Authorize(Roles = "Admin")]
+
     public class CategoryController : Controller
     {
-        CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
-        Context context = new Context();
-        public IActionResult Index(int page=1)
+        CategoryManager cm = new CategoryManager(new EfCategoryRepository());
+
+
+        public IActionResult Index(int page = 1)
         {
-            var values = categoryManager.GetList().ToPagedList(page, 5);
+            var values = cm.TGetAll().ToPagedList(page,18);
             return View(values);
         }
+
         [HttpGet]
         public IActionResult CategoryAdd()
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult CategoryAdd(Category category)
         {
-            CategoryValidator categoryValidator = new CategoryValidator();
-            ValidationResult results = categoryValidator.Validate(category);
+            CategoryValidator cv = new CategoryValidator();
+             ValidationResult results = cv.Validate(category);
             if (results.IsValid)
             {
-                category.CategoryStatus = true;
-                categoryManager.TAdd(category);
-                return RedirectToAction("Index", "Category");
-
-
-
+                category.Status = true;
+                cm.TAdd(category);
+                return RedirectToAction("CategoryAdd", "Category");    
             }
             else
             {
@@ -53,47 +55,40 @@ namespace CoreDemo.Areas.Admin.Controllers
             }
             return View();
         }
+
+        public IActionResult ChangeStatusCategory(int id)
+        {
+            var value = cm.TGetById(id);
+            if (value.Status)
+            {
+                value.Status = false;
+            }
+            else
+            {
+                value.Status = true;
+            }
+            cm.TUpdate(value);
+
+            return RedirectToAction("Index");
+        }
+
         [HttpGet]
-        public IActionResult CategoryUpdate(int id)
-        { 
-            var categoryValue = categoryManager.GetById(id);
-            return View(categoryValue);
+        public IActionResult UpdateCategory(int id)
+        {
+            var value = cm.TGetById(id);
+            return View(value);
         }
+
         [HttpPost]
-        public IActionResult CategoryUpdate(Category category)
+        public IActionResult UpdateCategory(Category category)
         {
-            CategoryValidator categoryValidator = new CategoryValidator();
-            ValidationResult results = categoryValidator.Validate(category);
-            if (results.IsValid)
-            {
-                categoryManager.TUpdate(category);
-                return RedirectToAction("Index", "Category");
-
-
-
-            }
-            else
-            {
-                foreach (var item in results.Errors)
-                {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                }
-            }
-            return View();
+            category.Status = true;
+            cm.TUpdate(category);
+            return RedirectToAction("Index");
         }
-        public IActionResult CategoryStatusChange(int id)
-        {
-            var isExities = categoryManager.GetById(id);
 
-            if (isExities == null)
-                return RedirectToAction("Index", "Category");
-
-            if (isExities.CategoryStatus == true)
-                categoryManager.UpdateRecordState(isExities.CategoryId, false);
-            else
-                categoryManager.UpdateRecordState(isExities.CategoryId, true);
-
-            return RedirectToAction("Index", "Category");
-        }
     }
+
+   
+
 }

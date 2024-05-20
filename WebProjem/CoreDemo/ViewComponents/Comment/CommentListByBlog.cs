@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace CoreDemo.ViewComponents.Comment
 {
-    public class CommentListByBlog: ViewComponent
+    public class CommentListByBlog : ViewComponent
     {
-        CommentManager commentManager = new CommentManager(new EfCommentDal());
+        CommentManager cm = new CommentManager(new EfCommentRepository());
         public IViewComponentResult Invoke(int id)
         {
-            var values = commentManager.GetList(id);
+            var values = cm.GetAll(id);
             return View(values);
         }
     }

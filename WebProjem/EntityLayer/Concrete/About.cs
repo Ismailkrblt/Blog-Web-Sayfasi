@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete
 {
-    public class About
+  public class About
     {
         [Key]
-        public int AboutId { get; set; }
-        public string AboutDetails1 { get; set; }
-        public string AboutDetails2 { get; set; }
-        public string AboutImage1 { get; set; }
-        public string AboutImage2 { get; set; }
-        public bool AboutMapLocation { get; set; }
-        public bool AboutStatus { get; set; }
+        public int Id { get; set; }
+        public string Details1 { get; set; }
+        public string Details2 { get; set; }
+        public string Image1 { get; set; }
+        public string Image2 { get; set; }
+        public string MapLocation { get; set; }
+        public bool Status { get; set; }
+
     }
 }

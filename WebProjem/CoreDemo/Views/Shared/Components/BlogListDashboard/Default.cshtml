@@ -1,5 +1,6 @@
 ﻿@using EntityLayer.Concrete
 @model List<Blog>
+
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="card">
@@ -9,11 +10,11 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th> # </th>
-                                <th> Başlık </th>
+                                <th> # Baslık </th>
                                 <th> Kategori </th>
                                 <th> Tarih </th>
-                                <th> Detaylar</th>
+                                <th> Detaylar </th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -21,49 +22,20 @@
                             {
                                 <tr>
                                     <td>
-                                        <img src="@item.BlogImage" class="mr-2" alt="image">
+                                        <img src="@item.Image" class="mr-2" alt="image"> @item.Title
                                     </td>
+                                    
                                     <td>
-                                        @item.BlogTitle
+                                        <label class="badge badge-gradient-success">@item.Category.Name</label>
                                     </td>
-
-                                    <td>
-                                        @if (item.CategoryId == 1)
-                                        {
-                                            <label class="badge badge-gradient-success">@item.Category.CategoryName</label>
-                                        }
-                                        @if (item.CategoryId == 2)
-                                        {
-                                            <label class="badge badge-gradient-info">@item.Category.CategoryName</label>
-                                        }
-                                        @if (item.CategoryId == 3)
-                                        {
-                                            <label class="badge badge-gradient-light">@item.Category.CategoryName</label>
-                                        }
-                                        @if (item.CategoryId == 4)
-                                        {
-                                            <label class="badge badge-gradient-primary">@item.Category.CategoryName</label>
-                                        }
-                                        @if (item.CategoryId == 6)
-                                        {
-                                            <label class="badge badge-gradient-warning">@item.Category.CategoryName</label>
-                                        }
-                                        @if (item.CategoryId == 8)
-                                        {
-                                            <label class="badge badge-gradient-info">@item.Category.CategoryName</label>
-                                        }
-                                        @if (item.CategoryId == 7)
-                                        {
-                                            <label class="badge badge-gradient-secondary">@item.Category.CategoryName</label>
-                                        }
-
-                                    </td>
-                                    <td> @(((DateTime)item.BlogCreateDate).ToString("dd-MMMM-yyyy")) </td>
-                                    <td>
-                                        <a href="/Blog/BlogReadAll/@item.BlogId" class="btn-sm btn-primary">Bloğu Gör</a>
-                                    </td>
+                                    <td> @(((DateTime)item.CreateDate).ToString("dd-MMM-yyyy")) </td>
+                                <td>
+                                    <a href="/Blog/BlogReadAll/@item.BlogId/" class="btn btn-dark">Detay</a>
+                                </td>
                                 </tr>
                             }
+
+
                         </tbody>
                     </table>
                 </div>

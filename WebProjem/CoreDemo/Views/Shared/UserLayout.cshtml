@@ -1,4 +1,5 @@
-﻿@{ 
+﻿
+@{
     Layout = null;
 }
 
@@ -6,7 +7,7 @@
 <html lang="zxx">
 
 <head>
-    <title>Weblog a Blogging Category Bootstrap responsive WebTemplate | Blog3 :: w3layouts</title>
+    <title>FixBlog | SMTcoder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <meta name="keywords" content="Weblog a Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -21,12 +22,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			window.scrollTo(0, 1);
 		}
     </script>
-    <link href="~/CoreBlogTema/web/css/bootstrap.css" rel='stylesheet' type='text/css' />
-    <link rel="stylesheet" href="~/CoreBlogTema/web/css/single.css">
-    <link href="~/CoreBlogTema/web/css/style.css" rel='stylesheet' type='text/css' />
-    <link href="~/CoreBlogTema/web/css/fontawesome-all.css" rel="stylesheet">
+    <link href="~/web/css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="~/web/css/single.css">
+    <link href="~/web/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="~/web/css/fontawesome-all.css" rel="stylesheet">
     <link href="//fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
           rel="stylesheet">
+
+
 </head>
 
 <body>
@@ -35,58 +38,64 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <header>
         <div class="top-bar_sub_w3layouts container-fluid">
             <div class="row">
-                <div class="col-md-4 logo text-left" >
-                    <a class="navbar-brand" href="#">
-                        <i class="fab fa-linode">KVOTHE</i> 
-                    </a>
+                <div class="col-md-4 logo text-left">
+                    
+                        <a class="navbar-brand brand-logo" href="/Home/"><img src="~/web/images/SMTlogo2.jpg" alt="logo" /></a>
+                   
+                    @*<img src="~/web/images/SMTlogo.jpg" />*@
                 </div>
-                @await Html.PartialAsync("Partial2") 
-                <div class="col-md-4 log-icons text-right">
-
-                    <ul class="social_list1 mt-3">
-
-                        <li>
-                            <a href="#" class="facebook1 mx-2">
-                                <i class="fab fa-facebook-f"></i>
-
+               @await Html.PartialAsync("Partial2")
+                <div class="copyrighttop">
+                    <ul>
+                        <li class="mx-3">
+                            <a class="" href="https://www.instagram.com/smtcoder/">
+                                <i class="fab fa-instagram"></i>
+                                <span>instagram</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="twitter2">
-                                <i class="fab fa-twitter"></i>
-
+                            <a class="" href="https://github.com/smtdeveloper">
+                                <i class="fab fa-github"></i>
+                                <span>Github</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="#" class="dribble3 mx-2">
-                                <i class="fab fa-dribbble"></i>
+                        <li class="mx-3">
+                            <a class="" href="https://www.linkedin.com/in/samet-akca-2a4bbb1a8/">
+                                <i class="fab fa-linkedin"></i>
+                                <span>linkedin</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="#" class="pin">
-                                <i class="fab fa-pinterest-p"></i>
+                        <li class="mx-3">
+                            <a class="" href="https://www.youtube.com/channel/UCZXmqpZJ3ax5Uzm0pXeVqMg/featured">
+                                <i class="fab fa-youtube"></i>
+                                <span>youtube</span>
                             </a>
                         </li>
                     </ul>
+
                 </div>
             </div>
         </div>
+
         @await Html.PartialAsync("Partial1")
 
     </header>
+    <!--//header-->
+
+ 
+
     <!--/main-->
-   
-    @RenderBody();
+    @RenderBody()
     <!--//main-->
     <!--footer-->
-    @await Html.PartialAsync("Partial3") 
+   @await Html.PartialAsync("Partial3")
     <!---->
     <!-- js -->
-    <script src="~/CoreBlogTema/web/js/jquery-2.2.3.min.js"></script>
+    <script src="~/web/js/jquery-2.2.3.min.js"></script>
     <!-- //js -->
     <!--/ start-smoth-scrolling -->
-    <script src="~/CoreBlogTema/web/js/move-top.js"></script>
-    <script src="~/CoreBlogTema/web/js/easing.js"></script>
+    <script src="~/web/js/move-top.js"></script>
+    <script src="~/web/js/easing.js"></script>
     <script>
 		jQuery(document).ready(function ($) {
 			$(".scroll").click(function (event) {
@@ -121,9 +130,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </a>
 
     <!-- //Custom-JavaScript-File-Links -->
-    <script src="~/CoreBlogTema/web/js/bootstrap.js"></script>
+    <script src="~/web/js/bootstrap.js"></script>
 
 
 </body>
 
 </html>
+
+

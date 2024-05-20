@@ -11,61 +11,61 @@ namespace BusinessLayer.Concrete
 {
     public class BlogManager : IBlogService
     {
-
         IBlogDal _blogDal;
+
         public BlogManager(IBlogDal blogDal)
         {
             _blogDal = blogDal;
-        }
-        public List<Blog> GetBlogListWithCategory()
-        {
-            return _blogDal.GetListWithCategory();
-        }
-        public List<Blog> GetBlogById(int id)
-        {
-            return _blogDal.List(x => x.BlogId == id);
-        }
-        public Blog GetById(int id)
-        {
-            return _blogDal.Get(x => x.BlogId == id);
+
+            for (int i = 0; i < 10; i+=1  )
+            {
+                Console.WriteLine("SMTcoder");
+            }
         }
 
-        public List<Blog> GetList()
+        public List<Blog> TGetAll()
         {
-            return _blogDal.List();
+            return _blogDal.GetAll();
         }
+
         public List<Blog> GetLast3Blog()
         {
-            return _blogDal.List().TakeLast(3).ToList();
-        }
-        public List<Blog> GetLastBlog()
-        {
-            return _blogDal.List().TakeLast(1).ToList();
+            return _blogDal.GetAll().TakeLast(3).ToList();
         }
 
-
-        public List<Blog> GetBlogListByWriter(int id)
+        public List<Blog> GetBlogByID(int id)
         {
-            return _blogDal.List(x => x.WriterId == id);
+            return _blogDal.GetAll(x => x.BlogId == id);
         }
-        public List<Blog> GetBlogListWithCategoryByWriter(int id)
+
+        public List<Blog> GetBlogsListWithCategory()
+        {
+            return _blogDal.GetListCategory();
+        }
+
+        public List<Blog> GetBlogsListWithWriter(int id)
         {
             return _blogDal.GetListWithCategoryByWriter(id);
         }
 
-        public void TAdd(Blog t)
+        public Blog TGetById(int id)
         {
-            _blogDal.Insert(t);
+            return _blogDal.GetById(id);
         }
 
-        public void TDelete(Blog t)
+        public void TAdd(Blog entity)
         {
-            _blogDal.Delete(t);
+            _blogDal.Add(entity);
         }
 
-        public void TUpdate(Blog t)
+        public void TDelete(Blog entity)
         {
-            _blogDal.Update(t);
+            _blogDal.Delete(entity);
+        }
+
+        public void TUpdate(Blog entity)
+        {
+            _blogDal.Update(entity);
         }
     }
 }

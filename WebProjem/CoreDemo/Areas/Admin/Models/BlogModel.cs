@@ -7,7 +7,7 @@ namespace CoreDemo.Areas.Admin.Models
 {
     public class BlogModel
     {
-        public int BlogId { get; set; }
+        public int ID { get; set; }
         public string BlogName { get; set; }
     }
 }

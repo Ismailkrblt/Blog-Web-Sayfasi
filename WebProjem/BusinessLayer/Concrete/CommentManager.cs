@@ -12,43 +12,47 @@ namespace BusinessLayer.Concrete
     public class CommentManager : ICommentService
     {
         ICommentDal _commentDal;
+
         public CommentManager(ICommentDal commentDal)
         {
             _commentDal = commentDal;
         }
-        public Comment GetById(int id)
+
+       
+
+        public List<Comment> GetAll(int id)
+        {
+            return _commentDal.GetAll(x => x.BlogId == id);
+        }
+
+        public List<Comment> GetCommentWithBlog()
+        {
+            return _commentDal.GetListWithBlog();
+        }
+
+        public void TAdd(Comment entity)
+        {
+            _commentDal.Add(entity);
+        }
+
+        public void TDelete(Comment entity)
         {
             throw new NotImplementedException();
         }
 
-        public List<Comment> GetList(int id)
+        public List<Comment> TGetAll()
         {
-            return _commentDal.List(x=>x.BlogId==id);
+            throw new NotImplementedException();
         }
 
-        public List<Comment> GetList()
+        public Comment TGetById(int id)
         {
-            return _commentDal.List();
+          return  _commentDal.GetById(id);
         }
 
-        public List<Comment> GetListWithCategory()
+        public void TUpdate(Comment entity)
         {
-            return _commentDal.GetListWithCategory();
-        }
-
-        public void TAdd(Comment t)
-        {
-            _commentDal.Insert(t);
-        }
-
-        public void TDelete(Comment t)
-        {
-            _commentDal.Delete(t);
-        }
-
-        public void TUpdate(Comment t)
-        {
-            _commentDal.Update(t);
+            _commentDal.Update(entity);
         }
     }
 }

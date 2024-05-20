@@ -9,37 +9,42 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Concrete
 {
-    public class NotificationManager : INotificationService
+   public class NotificationManager : INotificationService
     {
         INotificationDal _notificationDal;
         public NotificationManager(INotificationDal notificationDal)
         {
             _notificationDal = notificationDal;
         }
-        public Notification GetById(int id)
+
+        public void TAdd(Notification entity)
         {
-            return _notificationDal.Get(x => x.NotificationID == id);
-            
+            throw new NotImplementedException();
         }
 
-        public List<Notification> GetList()
+        public void TDelete(Notification entity)
         {
-            return _notificationDal.GetListAll();
+            throw new NotImplementedException();
         }
 
-        public void TAdd(Notification t)
+        public List<Notification> TGetAll()
         {
-            _notificationDal.Insert(t);
+           return _notificationDal.GetAll();
         }
 
-        public void TDelete(Notification t)
+        public List<Notification> TGetAll3Last()
         {
-            _notificationDal.Delete(t);
+            return _notificationDal.GetAll().Take(3).ToList();
         }
 
-        public void TUpdate(Notification t)
+        public Notification TGetById(int id)
         {
-            _notificationDal.Update(t);
+            throw new NotImplementedException();
+        }
+
+        public void TUpdate(Notification entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

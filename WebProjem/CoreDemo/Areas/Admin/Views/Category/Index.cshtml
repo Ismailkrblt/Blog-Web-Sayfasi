@@ -1,45 +1,60 @@
 ﻿@using X.PagedList
 @using X.PagedList.Mvc.Core
 @model IPagedList<EntityLayer.Concrete.Category>
+
+
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 
-<h1>Kategori Listesi</h1>
-<table class="table table-bordered">
+<table class="table">
     <tr>
-        <th>#</th>
-        <th>Kategori Adı</th>
-        <th>Status Durumu</th>
-        <th>Değişiklikler</th>
+        <th> # </th>
+        <th> Kategori Adı </th>
+        <th> Durum </th>
+        <th> Pasif / Aktif  Yap</th>
+        <th> Düzenle</th>
+
     </tr>
 
     @foreach (var item in Model)
     {
-
         <tr>
-            <th>@item.CategoryId</th>
-            <td>@item.CategoryName</td>
-            @if (item.CategoryStatus == false)
-            {
-                <td><a href="/Admin/Category/CategoryStatusChange/@item.CategoryId" id="DeleteBtn" onclick="return confirm('Aktif yapmak istediğinize emin misiniz?');" class="btn btn-primary">Aktif Yap</a></td>
-            }
+            <td>@item.CategoryId </td>
+            <td>@item.Name </td>
+            @*<td> <a href="/Admin/Category/CategoryPassive/@item.CategoryId/" onclick="return confirm('Emin misiniz ?  ' )" class="btn btn-secondary"> Pasif Yap </a> </td>*@
+        <td>
+            @if (item.Status)
+            {<span class="badge badge-success">Aktif</span> }
             else
-            {
-                <td><a href="/Admin/Category/CategoryStatusChange/@item.CategoryId" id="DeleteBtn" onclick="return confirm('Pasif yapmak istediğinize emin misiniz?');" class="btn btn-danger">Pasif Yap</a></td>
-            }
+            { <span class="badge badge-secondary">Pasif</span>}
+        </td>
+            <td>
 
-            <td><a href="/Admin/Category/CategoryUpdate/@item.CategoryId" class="btn btn-warning">Düzenle</a></td>
+                @if (item.Status)
+                {
+                    <a href="~/Admin/Category/ChangeStatusCategory/@item.CategoryId" id="Durum_@item.CategoryId" class="btn btn-secondary">Pasif Yap</a>
+                }
+                else
+                {
+                    <a href="~/Admin/Category/ChangeStatusCategory/@item.CategoryId"  id="Durum_@item.CategoryId" class="btn btn-success">Aktif Yap</a>
+                }
+
+            </td>
+            <td> <a href="~/Admin/Category/UpdateCategory/@item.CategoryId" class="btn btn-danger"> Düzenle </a> </td>
         </tr>
-
     }
 </table>
-<a href="/Admin/Category/CategoryAdd" class="btn btn-primary">Yeni Kategori</a>
+<BR />
+<a href="/Admin/Category/CategoryAdd/" class="btn btn-success">  Yeni Kategori  </a>
 <br />
 <br />
 @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
 
-@section scripts{
+@section scripts
+{
+    <scripts>
 
+    </scripts> 
 }

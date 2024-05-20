@@ -10,22 +10,27 @@ using System.Threading.Tasks;
 
 namespace CoreDemo.Controllers
 {
-    [AllowAnonymous]
+     [AllowAnonymous]
     public class NewsLetterController : Controller
     {
-        NewsLetterManager newsLetterManager = new NewsLetterManager(new EfNewsLetterDal());
+        NewsLetterManager nm = new NewsLetterManager(new EfNewsLetterRepository());
 
         [HttpGet]
-        public PartialViewResult SubcribeMail()
+        public IActionResult SubscribeMail()
         {
             return PartialView();
         }
+
         [HttpPost]
-        public PartialViewResult SubcribeMail(NewsLetter newsLetter)
+        public IActionResult SubscribeMail(NewsLetter newsLetter)
         {
             newsLetter.MailStatus = true;
-            newsLetterManager.TAdd(newsLetter);
+            nm.AddNewsLetter(newsLetter);
             return PartialView();
+         //return View();
+         // return RedirectToAction("Index", "Blog");
+       
         }
+
     }
 }

@@ -1,4 +1,4 @@
-using DataAccessLayer.Concrete.Context;
+using DataAccessLayer.Concrete;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -32,36 +32,41 @@ namespace CoreDemo
             services.AddDbContext<Context>();
             services.AddIdentity<AppUser, AppRole>(x =>
             {
-                x.Password.RequireUppercase = false;
                 x.Password.RequireNonAlphanumeric = false;
-            }).
-                AddEntityFrameworkStores<Context>();
-            services.AddControllersWithViews();
+                x.Password.RequireUppercase = false;
+
+            }).AddEntityFrameworkStores<Context>();
+
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddSession();
+
             services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .Build();
+                           .RequireAuthenticatedUser()
+                           .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
+
             });
+
             services.AddMvc();
+            services.AddAuthentication(
+                CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                x =>
+                {
+                    x.LoginPath = "/login/index/";
+                });
             services.ConfigureApplicationCookie(options =>
             {
+                //Cookie settings
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(200);
-                options.AccessDeniedPath = new PathString("/Login/AccessDenied");
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(150);
+                options.AccessDeniedPath = new PathString("/Login/AccesDenied");
                 options.LoginPath = "/Login/Index/";
                 options.SlidingExpiration = true;
             });
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(
-                x =>
-                {
-                    x.LoginPath = "/Login/Index/";
-                }
-                );
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,11 +83,15 @@ namespace CoreDemo
                 app.UseHsts();
             }
 
-            app.UseStatusCodePagesWithReExecute("/ErrorPage/Error1", "?code={0}");
+            app.UseStatusCodePagesWithReExecute("/ErrorPage/Error1", "?code{0}");
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+
+
             app.UseAuthentication();
-            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -90,12 +99,16 @@ namespace CoreDemo
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                   name: "areas",
-                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
 
                 endpoints.MapControllerRoute(
-                     name: "default",
-                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}"
+                );
+
 
             });
         }

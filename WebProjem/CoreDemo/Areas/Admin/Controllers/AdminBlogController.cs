@@ -10,14 +10,18 @@ using System.Threading.Tasks;
 namespace CoreDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin,Moderator")]
+    [Authorize(Roles = "Admin")]
+
     public class AdminBlogController : Controller
     {
-        BlogManager blogManager = new BlogManager(new EfBlogDal());
+        BlogManager blogManager = new BlogManager(new EfBlogRepository());
+         
         public IActionResult Index()
         {
-            var values = blogManager.GetBlogListWithCategory();
+            var values = blogManager.GetBlogsListWithCategory();
             return View(values);
         }
+
+
     }
 }

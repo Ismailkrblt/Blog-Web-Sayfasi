@@ -1,5 +1,5 @@
 ﻿using BusinessLayer.Concrete;
-using DataAccessLayer.Concrete.Context;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
@@ -11,51 +11,77 @@ using System.Threading.Tasks;
 
 namespace CoreDemo.Controllers
 {
+    
     public class MessageController : Controller
     {
-        Message2Manager message2Manager = new Message2Manager(new EfMessage2Dal());
-        Context context = new Context();
-
+        Message2Manager mm = new Message2Manager(new EfMessage2Repository());
+        Context c = new Context();
         public IActionResult InBox()
         {
-            var userName = User.Identity.Name;
-            var userMail = context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
-            var writerId = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
-            var values = message2Manager.GetInboxListByWriter(writerId);
-            return View(values);
-        }
-        public IActionResult SendBox()
-        {
-            var userName = User.Identity.Name;
-            var userMail = context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
-            var writerId = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
-            var values = message2Manager.GetSendBoxListByWriter(writerId);
+            var username = User.Identity.Name;
+            var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
+            var writerID = c.Writers.Where(x => x.Mail == usermail).Select(y => y.WriterId).FirstOrDefault();
+            var values = mm.GetInboxListByWriter(writerID);
+            //if (values.Count() > 3)
+            //{
+            //    values = values.TakeLast(3).ToList();
+            //}
             return View(values);
         }
 
-        [HttpGet]
-        public IActionResult MessageDetails(int id)
-        {            
-            var messageValue = message2Manager.GetById(id);
-            return View(messageValue);
+        public IActionResult SendBox()
+        {
+            var username = User.Identity.Name;
+            var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
+            var writerID = c.Writers.Where(x => x.Mail == usermail).Select(y => y.WriterId).FirstOrDefault();
+            var values = mm.GetSendboxListByWriter(writerID);
+            return View(values);
         }
+
+        public IActionResult MessageDetail(int id)
+        {
+            var value = mm.TGetById(id);
+            return View(value);
+        }
+
         [HttpGet]
         public IActionResult SendMessage()
         {
             return View();
         }
+
         [HttpPost]
-        public IActionResult SendMessage(Message2 message)
+        public IActionResult SendMessage(Message2 p)
         {
-            var userName = User.Identity.Name;
-            var userMail = context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
-            var writerId = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
-            message.SenderID = writerId;
-            message.ReceiverID = 2;
-            message.MessageStatus = true;
-            message.MessageDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());
-            message2Manager.TAdd(message);
-            return RedirectToAction("Inbox","Message");
+
+
+            var username = User.Identity.Name;
+            var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
+            var writerID = c.Writers.Where(x => x.Mail == usermail).Select(y => y.WriterId).FirstOrDefault();
+
+            p.SenderID = writerID;
+            p.ReceiverID = 20;
+            p.MessageStatus = true;
+            p.MessageDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+            mm.TAdd(p);
+            return RedirectToAction("Inbox");
+        }
+
+
+        public IActionResult DeleteMessage(int id)
+        {
+
+            var value = mm.TGetById(id);
+            if (value.IsDelete)
+            {
+                value.IsDelete = false;
+            }
+            else
+            {
+                value.IsDelete = true;
+            }
+            mm.TUpdate(value);
+            return RedirectToAction("Inbox");
         }
     }
 }

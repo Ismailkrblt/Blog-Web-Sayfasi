@@ -18,29 +18,29 @@ namespace BusinessLayer.Concrete
             _userDal = userDal;
         }
 
-        public AppUser GetById(int id)
+        public void TAdd(AppUser entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TDelete(AppUser entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<AppUser> TGetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public AppUser TGetById(int id)
         {
             return _userDal.GetById(id);
         }
 
-        public List<AppUser> GetList()
+        public void TUpdate(AppUser entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public void TAdd(AppUser t)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void TDelete(AppUser t)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void TUpdate(AppUser t)
-        {
-            _userDal.Update(t);
+             _userDal.Update(entity);
         }
     }
 }

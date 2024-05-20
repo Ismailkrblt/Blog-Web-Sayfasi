@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Concrete
 {
-    public class WriterManager: IWriterService
+  public class WriterManager : IWriterService
     {
         IWriterDal _writerDal;
         public WriterManager(IWriterDal writerDal)
@@ -17,35 +17,34 @@ namespace BusinessLayer.Concrete
             _writerDal = writerDal;
         }
 
-        public Writer GetById(int id)
+        public List<Writer> GetWriterById(int id)
         {
-            return _writerDal.Get(x => x.WriterId == id);
+            return _writerDal.GetAll(x => x.WriterId == id);
         }
 
-        public List<Writer> GetList()
+        public void TAdd(Writer entity)
         {
-            return _writerDal.List();
+            _writerDal.Add(entity);
         }
 
-        public List<Writer> GetBlogWriterById(int id)
+        public void TDelete(Writer entity)
         {
-            return _writerDal.List(x => x.WriterId == id);
+            throw new NotImplementedException();
         }
 
-        public void TAdd(Writer t)
+        public List<Writer> TGetAll()
         {
-            _writerDal.Insert(t);
+            throw new NotImplementedException();
         }
 
-        public void TDelete(Writer t)
+        public Writer TGetById(int id)
         {
-            _writerDal.Delete(t);
+            return _writerDal.GetById(id);
         }
 
-        public void TUpdate(Writer t)
+        public void TUpdate(Writer entity)
         {
-            _writerDal.Update(t);
+            _writerDal.Update(entity);
         }
-
     }
 }

@@ -11,17 +11,25 @@ namespace CoreDemo.Controllers
 {
     public class NotificationController : Controller
     {
-        NotificationManager notificationManager = new NotificationManager(new EfNotificationDal());
+        NotificationManager nm = new NotificationManager(new EfNotificationRepository());
+
         public IActionResult Index()
         {
             return View();
         }
+
         [AllowAnonymous]
         public IActionResult AllNotification()
         {
-            var values = notificationManager.GetList();
+            var values = nm.TGetAll();
             return View(values);
-            
         }
+
+        public IActionResult DeleteNotification()
+        {
+            return View();
+        }
+
     }
 }
+//denemeee

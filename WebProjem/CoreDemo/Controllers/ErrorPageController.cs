@@ -12,5 +12,6 @@ namespace CoreDemo.Controllers
         {
             return View();
         }
+
     }
 }

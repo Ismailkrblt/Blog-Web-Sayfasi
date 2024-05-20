@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace CoreDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin,Moderator")]
+    [Authorize(Roles = "Admin")]
+
     public class ChartController : Controller
     {
         public IActionResult Index()
@@ -18,66 +19,26 @@ namespace CoreDemo.Areas.Admin.Controllers
         }
         public IActionResult CategoryChart()
         {
-            List<CategoryModel> list = new List<CategoryModel>();
-            list.Add(new CategoryModel
-            {
-                categoryname = "Aile",
-                categorycount = 5
-            });
-            list.Add(new CategoryModel
-            {
-                categoryname = "Tarih",
-                categorycount = 7
-            });
-            list.Add(new CategoryModel
-            {
-                categoryname = "Haber",
-                categorycount = 13
-            });
-            list.Add(new CategoryModel
-            {
-                categoryname = "Magazin",
-                categorycount = 7
-            });
-            list.Add(new CategoryModel
-            {
-                categoryname = "Sanat",
-                categorycount = 12
-            });
-            list.Add(new CategoryModel
-            {
-                categoryname = "Sağlık",
-                categorycount = 8
-            });
-            list.Add(new CategoryModel
-            {
-                categoryname = "Eğitim",
-                categorycount = 20
-            });
-            list.Add(new CategoryModel
-            {
-                categoryname = "Sinema",
-                categorycount = 21
-            });
-            list.Add(new CategoryModel
+            List<CategoryClass> list = new List<CategoryClass>();
+            list.Add(new CategoryClass
             {
                 categoryname = "Teknoloji",
-                categorycount = 40
+                categorycount = 10
             });
-            list.Add(new CategoryModel
+            list.Add(new CategoryClass
             {
                 categoryname = "Yazılım",
-                categorycount = 35
+                categorycount = 14
             });
-            list.Add(new CategoryModel
+            list.Add(new CategoryClass
             {
                 categoryname = "Spor",
-                categorycount = 4
+                categorycount = 5
             });
-            list.Add(new CategoryModel
+            list.Add(new CategoryClass
             {
-                categoryname = "Müzik",
-                categorycount = 19
+                categoryname = "Sinema",
+                categorycount = 12
             });
             return Json(new { jsonlist = list });
         }

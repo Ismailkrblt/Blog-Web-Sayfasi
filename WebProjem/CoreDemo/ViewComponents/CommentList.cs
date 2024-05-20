@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CoreDemo.ViewComponents
 {
-    public class CommentList : ViewComponent
+    public class CommentList :ViewComponent
     {
         public IViewComponentResult Invoke()
         {
@@ -15,16 +15,21 @@ namespace CoreDemo.ViewComponents
             {
                 new UserComment
                 {
-                    ID=1,
-                    UserName="Rabia"
+                     ID=1,
+                      UserName="Samet"
                 },
                 new UserComment
                 {
-                    ID=2,
-                    UserName="Hakan"
+                     ID=2,
+                      UserName="Burak"
+                },
+                new UserComment
+                {
+                     ID=3,
+                      UserName="Muco"
                 }
             };
             return View(commentValues);
-        }
+       }
     }
 }

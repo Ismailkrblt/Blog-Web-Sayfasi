@@ -11,39 +11,41 @@ namespace BusinessLayer.Concrete
 {
     public class MessageManager : IMessageService
     {
-        IMessageDal _messageDal;
+
+        IMessageDal _messageDal; 
+        
         public MessageManager(IMessageDal messageDal)
         {
             _messageDal = messageDal;
         }
-        public Message GetById(int id)
+        public void TAdd(Message entity)
         {
-            return _messageDal.Get(x => x.MessageID == id);
+            throw new NotImplementedException();
         }
 
-        public List<Message> GetList()
+        public void TDelete(Message entity)
         {
-            return _messageDal.GetListAll();
+            throw new NotImplementedException();
         }
 
-        public List<Message> GetInboxListWriter(string p)
+        public List<Message> TGetAll()
         {
-            return _messageDal.List(x => x.Receiver == p);
+            return _messageDal.GetAll();
         }
 
-        public void TAdd(Message t)
+        public List<Message> GetInboxListByWriter(string p)
         {
-            _messageDal.Insert(t);
+            return _messageDal.GetAll( x => x.Receiver == p ).Take(3).ToList();
         }
 
-        public void TDelete(Message t)
+        public Message TGetById(int id)
         {
-            _messageDal.Delete(t);
+            throw new NotImplementedException();
         }
 
-        public void TUpdate(Message t)
+        public void TUpdate(Message entity)
         {
-            _messageDal.Update(t);
+            throw new NotImplementedException();
         }
     }
 }

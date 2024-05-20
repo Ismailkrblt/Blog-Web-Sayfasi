@@ -8,14 +8,13 @@ using System.Threading.Tasks;
 
 namespace CoreDemo.ViewComponents.Blog
 {
-    public class BlogListDashboard:ViewComponent
+    public class BlogListDashboard : ViewComponent
     {
-        BlogManager blogManager = new BlogManager(new EfBlogDal());
+        BlogManager bm = new BlogManager(new EfBlogRepository());
         public IViewComponentResult Invoke()
         {
-            var values = blogManager.GetBlogListWithCategory();
+            var values = bm.GetBlogsListWithCategory();
             return View(values);
-
         }
     }
 }
